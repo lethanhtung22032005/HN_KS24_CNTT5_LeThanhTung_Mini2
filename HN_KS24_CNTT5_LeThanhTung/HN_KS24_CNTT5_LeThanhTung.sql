@@ -80,35 +80,19 @@ SELECT g.guest_name, COUNT(b.booking_id) AS So_lan_dat_phong
 FROM guests g
 LEFT JOIN bookings b ON g.guest_id = b.guest_id
 GROUP BY g.guest_name;
-SELECT
-    r.room_type,
-    SUM(DATEDIFF(b.check_out, b.check_in) * r.price_per_day) AS Doanh_thu
-FROM
-    bookings b
-JOIN
-    rooms r ON b.room_id = r.room_id
-GROUP BY
-    r.room_type;
+SELECT r.room_type, SUM(DATEDIFF(b.check_out, b.check_in) * r.price_per_day) AS Doanh_thu
+FROM bookings b
+JOIN rooms r ON b.room_id = r.room_id
+GROUP BY r.room_type;
 -- Hiển thị tổng doanh thu của từng loại phòng
-SELECT
-    g.guest_name
-FROM
-    guests g
-JOIN
-    bookings b ON g.guest_id = b.guest_id
-GROUP BY
-    g.guest_name
-HAVING
-    COUNT(b.booking_id) >= 2;
-SELECT
-    r.room_type,
-    COUNT(b.room_id) AS So_luot_dat_phong
-FROM
-    rooms r
-LEFT JOIN
-    bookings b ON r.room_id = b.room_id
-GROUP BY
-    r.room_type
-ORDER BY
-    So_luot_dat_phong DESC
+SELECT g.guest_name
+FROM guests g
+JOIN bookings b ON g.guest_id = b.guest_id
+GROUP BY g.guest_name
+HAVING COUNT(b.booking_id) >= 2;
+SELECT r.room_type, COUNT(b.room_id) AS So_luot_dat_phong
+FROM rooms r
+LEFT JOIN bookings b ON r.room_id = b.room_id
+GROUP BY r.room_type
+ORDER BY So_luot_dat_phong DESC
 LIMIT 1;
